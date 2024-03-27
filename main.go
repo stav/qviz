@@ -5,6 +5,8 @@ import (
 
 	"github.com/labstack/echo/v4"
 	"github.com/labstack/echo/v4/middleware"
+
+	"bld/qviz/routes"
 )
 
 func main() {
@@ -19,9 +21,7 @@ func main() {
 		Format: "${status} ${method} ${uri} ${error}\n",
 	}))
 
-	e.GET("/", func(c echo.Context) error {
-		return c.String(200, "Hello, World!")
-	})
+	e.GET("/", routes.IndexHandler)
 
 	e.Logger.Fatal(e.Start(":8888"))
 
