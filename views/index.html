@@ -6,16 +6,16 @@
     <title>Qviz Index</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="https://cdn.tailwindcss.com?plugins=forms,typography,aspect-ratio,line-clamp"></script>
     <script src="https://unpkg.com/htmx.org@1.7.0/dist/htmx.js"></script>
 </head>
 
-<body>
-    <h1>Qviz Index</h1>
-    <p>Qviz is a simple quiz application.</p>
-    <p>Click the button below to start the quiz.</p>
-    <button hx-get="/quiz" hx-target="#quiz">Start Quiz</button>
-    <div id="quiz"></div>
-    <footer>
+<body class="p-4">
+    <h1 class="text-3xl font-bold pb-4">Qviz Index</h1>
+
+    {{ template "auth" . }}
+
+    <footer class="py-2">
         <p>Qviz is a simple quiz application.</p>
     </footer>
 </body>

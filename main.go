@@ -39,7 +39,7 @@ func main() {
 	}))
 
 	e.GET("/", routes.IndexHandler)
-	e.GET("/quiz", routes.QuizHandler)
+	e.GET("/login", routes.LoginHandler)
 
 	e.Logger.Fatal(e.Start(":8888"))
 

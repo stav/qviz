@@ -1,0 +1,22 @@
+{{ block "login" . }}
+<div class="mt-4">
+    <div class="grid grid-cols-1 gap-6">
+        <label class="block">
+            <span class="text-gray-700">Email address</span>
+            <input type="email" class="mt-1 block w-full" placeholder="john@example.com">
+        </label>
+        <label class="block">
+            <span class="text-gray-700">Password</span>
+            <input type="password" class="mt-1 block w-full">
+        </label>
+        <button hx-get="/login" hx-target="#message"
+            class="px-4 py-1 text-sm text-purple-600 font-semibold rounded-full border border-purple-200 hover:text-white hover:bg-purple-600 hover:border-transparent focus:outline-none focus:ring-2 focus:ring-purple-600 focus:ring-offset-2">
+            Login
+        </button>
+    </div>
+    <div id="message" class="mt-4 text-red-600">
+        {{ .Message }}
+    </div>
+
+</div>
+{{ end }}

@@ -1,0 +1,9 @@
+{{ block "auth" . }}
+<div class="max-w-md">
+
+    Check if logged in: <span id="auth-status">({{ .AuthStatus }})</span>
+
+    {{ template "login" . }}
+
+</div>
+{{ end }}
