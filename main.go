@@ -1,19 +1,28 @@
 package main
 
 import (
-	"fmt"
-	"io"
 	"log"
-	"net/http"
+
+	"github.com/labstack/echo/v4"
+	"github.com/labstack/echo/v4/middleware"
 )
 
 func main() {
-	fmt.Println("Hello, world.")
-	helloHandler := func(w http.ResponseWriter, req *http.Request) {
-		io.WriteString(w, "Hello, world!\n")
-	}
 
-	http.HandleFunc("/hello", helloHandler)
-	log.Println("Listing for requests at http://localhost:8000/hello")
-	log.Fatal(http.ListenAndServe(":8000", nil))
+	log.Println("Mainline logging")
+
+	e := echo.New()
+	e.Logger.Print("Logging to the echo logger")
+
+	e.Use(middleware.Recover())
+	e.Use(middleware.LoggerWithConfig(middleware.LoggerConfig{
+		Format: "${status} ${method} ${uri} ${error}\n",
+	}))
+
+	e.GET("/", func(c echo.Context) error {
+		return c.String(200, "Hello, World!")
+	})
+
+	e.Logger.Fatal(e.Start(":8888"))
+
 }
