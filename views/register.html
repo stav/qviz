@@ -1,8 +1,8 @@
-{{ block "login" . }}
-<div id="login" class="mt-4">
-    <form hx-post="/login" hx-target="#auth">
+{{ block "register" . }}
+<div id="register" class="mt-4">
+    <form hx-post="/register" hx-target="#auth">
         <div class="grid grid-cols-1 gap-6 max-w-md mx-auto">
-            <h1 class="text-2xl font-semibold">Login</h1>
+            <h1 class="text-2xl font-semibold">Register</h1>
             <label class="block">
                 <span>Email address</span>
                 <input type="email" name="email" class="dark:bg-zinc-700 rounded-md block w-full">
@@ -13,7 +13,7 @@
             </label>
             <button type="submit"
                 class="px-4 py-1 text-sm text-purple-700 dark:text-purple-100 font-semibold rounded-full border border-purple-200 hover:text-white hover:bg-purple-600 hover:border-transparent focus:outline-none focus:ring-2 focus:ring-purple-600 focus:ring-offset-2">
-                Login
+                Register
             </button>
         </div>
     </form>

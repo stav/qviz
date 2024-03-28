@@ -1,0 +1,23 @@
+{{ block "header" . }}
+<nav class="border-b bg-white dark:bg-zinc-800 dark:border-zinc-700">
+  <div class="flex items-baseline justify-end sm:justify-between p-4 max-w-screen-xl mx-auto">
+    <a href="/" class="hidden sm:block font-semibold">Quiz</a>
+    <div>
+      <ul class="font-medium flex items-baseline gap-8">
+        <li>
+          <button hx-get="/register" hx-target="#register" hx-swap="outerHTML"
+            class="px-4 py-1 text-sm text-purple-700 dark:text-purple-100 font-semibold rounded-full border hover:border-purple-200 border-transparent focus:outline-none focus:ring-2 focus:ring-purple-600 focus:ring-offset-2">
+            Register
+          </button>
+        </li>
+        <li>
+          <button hx-get="/login" hx-target="#login" hx-swap="outerHTML"
+            class="px-4 py-1 text-sm text-purple-700 dark:text-purple-100 font-semibold rounded-full border hover:border-purple-200 border-transparent focus:outline-none focus:ring-2 focus:ring-purple-600 focus:ring-offset-2">
+            Login
+          </button>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+{{ end }}

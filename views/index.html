@@ -22,13 +22,15 @@
 </head>
 
 <body class="flex flex-col h-full w-full bg-zinc-50 text-800 dark:bg-zinc-800 dark:text-zinc-100 p-4">
-    <h1 class="text-3xl font-bold pb-4">Qviz Index</h1>
+
+    {{ template "header" . }}
 
     {{ template "auth" . }}
 
     <footer class="py-2">
         <p>Qviz is a simple quiz application.</p>
     </footer>
+
 </body>
 
 </html>

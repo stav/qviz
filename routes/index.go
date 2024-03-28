@@ -2,6 +2,7 @@ package routes
 
 import (
 	"context"
+	"fmt"
 	"os"
 
 	"github.com/labstack/echo/v4"
@@ -15,7 +16,9 @@ var supabase = supa.CreateClient(SUPABASE_URL, SUPABASE_KEY)
 
 type Result struct {
 	Error error
-	Auth  supa.AuthenticatedDetails
+	Id    string
+	Email string
+	Message string
 }
 
 func IndexHandler(c echo.Context) error {
@@ -45,7 +48,40 @@ func PostLoginHandler(c echo.Context) error {
 	}
 
 	if auth != nil {
-		result.Auth = *auth
+		result.Id = auth.User.ID
+		result.Email = auth.User.Email
+		result.Message = "User has been authenticated"
+	}
+
+	return c.Render(status, "result", result)
+}
+
+func GetRegisterHandler(c echo.Context) error {
+	return c.Render(200, "register", nil)
+}
+
+func PostRegisterHandler(c echo.Context) error {
+	ctx := context.Background()
+
+	creds := supa.UserCredentials{
+		Email:    c.FormValue("email"),
+		Password: c.FormValue("password"),
+	}
+	user, err := supabase.Auth.SignUp(ctx, creds)
+
+	status := 200
+	if err != nil {
+		status = 422
+	}
+
+	result := Result{
+		Error: err,
+	}
+
+	if user != nil {
+		result.Id = user.ID
+		result.Email = user.Email
+		result.Message = fmt.Sprintf("User %s has been created", user.Email)
 	}
 
 	return c.Render(status, "result", result)
