@@ -33,13 +33,13 @@ func main() {
 	e.Logger.Print("Logging to the echo logger")
 	e.Renderer = newTemplate()
 
-	e.Use(middleware.Recover())
+	// e.Use(middleware.Recover())
 	e.Use(middleware.LoggerWithConfig(middleware.LoggerConfig{
 		Format: "${status} ${method} ${uri} ${error}\n",
 	}))
 
 	e.GET("/", routes.IndexHandler)
-	e.GET("/login", routes.LoginHandler)
+	e.POST("/login", routes.PostLoginHandler)
 
 	e.Logger.Fatal(e.Start(":8888"))
 
