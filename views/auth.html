@@ -24,14 +24,14 @@
         {{ .Message }}
     </div>
     {{ if .Id }}
-    <dl class="flex">
-        <dt class="flex-none w-20">Id</dt>
-        <dd class="flex w-full">{{ .Id }}</dd>
-    </dl>
-    <dl class="flex">
-        <dt class="flex-none w-20">Email</dt>
-        <dd class="flex">{{ .Email }}</dd>
-    </dl>
+    <dl class="flex"><dt class="flex-none w-20"> Id    </dt><dd>{{ .Id    }}</dd></dl>
+    <dl class="flex"><dt class="flex-none w-20"> Email </dt><dd>{{ .Email }}</dd></dl>
+    <dl class="flex"><dt class="flex-none w-20"> Token </dt><dd>{{ .Token }}</dd></dl>
     {{ end }}
 </div>
+<script type="module">
+    console.log('supabase client auth url', document.client.authUrl)
+    const { data: { user } } = await document.client.auth.getUser("{{ .Token }}")
+    console.log('supabase user', user)
+</script>
 {{ end }}
