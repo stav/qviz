@@ -38,6 +38,9 @@ func main() {
 		Format: "${status} ${method} ${uri} ${error}\n",
 	}))
 
+	e.File("/htmx.png", "images/htmx.png")
+	e.File("/htmx.js", "js/htmx.js")
+
 	e.GET("/", routes.IndexHandler)
 	e.GET("/login", routes.GetLoginHandler)
 	e.POST("/login", routes.PostLoginHandler)
