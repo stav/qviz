@@ -6,19 +6,10 @@
     <title>Qviz Index</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <script src="https://cdn.tailwindcss.com?plugins=forms,typography,aspect-ratio,line-clamp"></script>
-    <script src="https://unpkg.com/htmx.org@1.7.0/dist/htmx.js"></script>
-    <script>
-        document.addEventListener("DOMContentLoaded", (event) => {
-            htmx.logAll()
-            document.body.addEventListener('htmx:beforeSwap', function (evt) {
-                if (evt.detail.xhr.status === 422) {
-                    evt.detail.shouldSwap = true;
-                    evt.detail.isError = false;
-                }
-            })
-        })
-    </script>
+    <link rel="icon" type="image/png" href="htmx.png">
+    <script src="https://cdn.tailwindcss.com?plugins=forms,typography,aspect-ratio"></script>
+    <script src="https://unpkg.com/htmx.org@1.9.11/dist/htmx.js"></script>
+    <script src="index.js" type="module"></script>
 </head>
 
 <body class="flex flex-col h-full w-full bg-zinc-50 text-800 dark:bg-zinc-800 dark:text-zinc-100 p-4">
