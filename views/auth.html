@@ -29,16 +29,16 @@
     {{ end }}
 </div>
 <script type="module">
-    console.log("client++", document.client)
-    // const token = localStorage.getItem("supabase.auth.token")
-    // if (token) {
-    //     console.log("token", token)
-    // }
     const token = '{{ .Token }}'
+    console.log("token length:", token.length)
     if (token.length > 0) {
-        // localStorage.setItem("supabase.auth.token", token)
-        const { data: { user } } = await document.client.auth.getUser("{{ .Token }}")
-        console.log("user", user)
+        localStorage.setItem("supabase.auth.token", token)
+        const { data: { user } } = await document.client.auth.getUser(token)
+        console.log("user", user.email, user.role)
+
+        const { data, error } = await document.client.auth.refreshSession()
+        const { session, user2 } = data
+        console.log("session", session, user2)
     }
 </script>
 {{ end }}

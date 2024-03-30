@@ -49,6 +49,8 @@ func main() {
 	e.GET("/register", routes.GetRegisterHandler)
 	e.POST("/register", routes.PostRegisterHandler)
 
+	e.GET("/quizzes", routes.GetQuizzesHandler)
+
 	e.Logger.Fatal(e.Start(":8888"))
 
 }

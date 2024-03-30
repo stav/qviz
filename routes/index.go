@@ -35,6 +35,10 @@ func ScriptHandler(c echo.Context) error {
 	return c.Render(200, "client", result)
 }
 
+func GetQuizzesHandler(c echo.Context) error {
+	return c.Render(200, "quizzes", nil)
+}
+
 func GetLoginHandler(c echo.Context) error {
 	return c.Render(200, "login", nil)
 }
