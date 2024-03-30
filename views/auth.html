@@ -10,13 +10,12 @@
         {{ template "login" . }}
 
     </div>
-
-    {{ template "result" . }}
+    <div id="result"></div>
 </div>
 {{ end }}
 
 {{ block "result" . }}
-<div id="auth">
+<div>
     <div class="mt-4 text-red-700 dark:text-red-200">
         {{ .Error }}
     </div>
@@ -24,14 +23,16 @@
         {{ .Message }}
     </div>
     {{ if .Id }}
-    <dl class="flex">
-        <dt class="flex-none w-20">Id</dt>
-        <dd class="flex w-full">{{ .Id }}</dd>
-    </dl>
-    <dl class="flex">
-        <dt class="flex-none w-20">Email</dt>
-        <dd class="flex">{{ .Email }}</dd>
-    </dl>
+    <dl class="flex"><dt class="flex-none w-20"> Id    </dt><dd>{{ .Id    }}</dd></dl>
+    <dl class="flex"><dt class="flex-none w-20"> Email </dt><dd>{{ .Email }}</dd></dl>
+    <dl class="flex"><dt class="flex-none w-20"> Token </dt><dd>{{ .Token }}</dd></dl>
     {{ end }}
 </div>
+<script type="module">
+    const token = '{{ .Token }}'
+    console.log("token length:", token.length)
+    if (token.length > 0) {
+        localStorage.setItem("supabase.auth.token", token)
+    }
+</script>
 {{ end }}

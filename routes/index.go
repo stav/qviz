@@ -18,6 +18,7 @@ type Result struct {
 	Error error
 	Id    string
 	Email string
+	Token string
 	Message string
 }
 
@@ -50,6 +51,7 @@ func PostLoginHandler(c echo.Context) error {
 	if auth != nil {
 		result.Id = auth.User.ID
 		result.Email = auth.User.Email
+		result.Token = auth.AccessToken
 		result.Message = "User has been authenticated"
 	}
 
