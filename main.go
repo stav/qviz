@@ -17,7 +17,7 @@ type Template struct {
 
 func newTemplate() *Template {
 	return &Template{
-		tmpl: template.Must(template.ParseGlob("views/*.html")),
+		tmpl: template.Must(template.ParseGlob("views/*")),
 	}
 }
 
@@ -39,8 +39,9 @@ func main() {
 	}))
 
 	e.File("/htmx.png", "images/htmx.png")
-	e.File("/htmx.js", "js/htmx-1.9.11.js")
-	e.File("/index.js", "js/index.js")
+	e.File("/htmx.js", "js/htmx.js")
+
+	e.GET("/client.js", routes.ScriptHandler)
 
 	e.GET("/", routes.IndexHandler)
 	e.GET("/login", routes.GetLoginHandler)

@@ -26,6 +26,15 @@ func IndexHandler(c echo.Context) error {
 	return c.Render(200, "index", nil)
 }
 
+func ScriptHandler(c echo.Context) error {
+	c.Response().Header().Set("Content-Type", "application/javascript")
+	result := map[string]interface{}{
+		"supabaseUrl": SUPABASE_URL,
+		"supabaseKey": SUPABASE_KEY,
+	}
+	return c.Render(200, "client", result)
+}
+
 func GetLoginHandler(c echo.Context) error {
 	return c.Render(200, "login", nil)
 }

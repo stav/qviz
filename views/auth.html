@@ -10,13 +10,12 @@
         {{ template "login" . }}
 
     </div>
-
-    {{ template "result" . }}
+    <div id="result"></div>
 </div>
 {{ end }}
 
 {{ block "result" . }}
-<div id="auth">
+<div>
     <div class="mt-4 text-red-700 dark:text-red-200">
         {{ .Error }}
     </div>
@@ -30,8 +29,16 @@
     {{ end }}
 </div>
 <script type="module">
-    console.log('supabase client auth url', document.client.authUrl)
-    const { data: { user } } = await document.client.auth.getUser("{{ .Token }}")
-    console.log('supabase user', user)
+    console.log("client++", document.client)
+    // const token = localStorage.getItem("supabase.auth.token")
+    // if (token) {
+    //     console.log("token", token)
+    // }
+    const token = '{{ .Token }}'
+    if (token.length > 0) {
+        // localStorage.setItem("supabase.auth.token", token)
+        const { data: { user } } = await document.client.auth.getUser("{{ .Token }}")
+        console.log("user", user)
+    }
 </script>
 {{ end }}
