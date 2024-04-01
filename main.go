@@ -10,7 +10,6 @@ import (
 
 	"github.com/golang-jwt/jwt/v5"
 
-	echojwt "github.com/labstack/echo-jwt/v4"
 	"github.com/labstack/echo/v4"
 	"github.com/labstack/echo/v4/middleware"
 
@@ -40,24 +39,24 @@ func main() {
 	e.Renderer = newTemplate()
 
 	// e.Use(middleware.Recover())
-	e.Use(echojwt.WithConfig(echojwt.Config{
-		SigningKey: []byte("secret"),
-		ContinueOnIgnoredError: true,
-		SuccessHandler: func(c echo.Context) {
-			fmt.Println("SuccessHandler")
-			user := c.Get("user").(*jwt.Token)
-			claims := user.Claims.(jwt.MapClaims)
-			// c.Logger().Info("User: ", claims["name"])
-			log.Println("user:::", claims["name"])
-		},
-		ErrorHandler: func(c echo.Context, err error) error {
-			fmt.Println("ErrorHandler")
-			c.JSON(http.StatusUnauthorized, map[string]string{
-				"error": err.Error(),
-			})
-			return nil
-		},
-	}))
+	// e.Use(echojwt.WithConfig(echojwt.Config{
+	// 	SigningKey: []byte("secret"),
+	// 	ContinueOnIgnoredError: true,
+	// 	SuccessHandler: func(c echo.Context) {
+	// 		fmt.Println("SuccessHandler")
+	// 		user := c.Get("user").(*jwt.Token)
+	// 		claims := user.Claims.(jwt.MapClaims)
+	// 		// c.Logger().Info("User: ", claims["name"])
+	// 		log.Println("user:::", claims["name"])
+	// 	},
+	// 	ErrorHandler: func(c echo.Context, err error) error {
+	// 		fmt.Println("ErrorHandler")
+	// 		c.JSON(http.StatusUnauthorized, map[string]string{
+	// 			"error": err.Error(),
+	// 		})
+	// 		return nil
+	// 	},
+	// }))
 	e.Use(middleware.LoggerWithConfig(middleware.LoggerConfig{
 		Format: "${status} ${method} ${uri} ${error}\n",
 	}))
@@ -65,6 +64,8 @@ func main() {
 		return func(c echo.Context) error {
 			// Extract the credentials from HTTP request header and perform a security
 			// check
+			hxrequest := c.Request().Header.Get("Hx-Request")
+			fmt.Println("hxrequest::", hxrequest)
 
 			// For invalid credentials
 			// return echo.NewHTTPError(http.StatusUnauthorized, "Please provide valid credentials")
