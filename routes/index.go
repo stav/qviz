@@ -23,7 +23,7 @@ type Result struct {
 }
 
 func IndexHandler(c echo.Context) error {
-	return c.Render(200, "index", nil)
+	return c.Render(200, "index.html", nil)
 }
 
 func GetLoginHandler(c echo.Context) error {
