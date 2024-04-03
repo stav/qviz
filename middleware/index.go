@@ -41,7 +41,7 @@ func Sentry(next echo.HandlerFunc) echo.HandlerFunc {
 
 		cookie, err := c.Cookie("token")
 		if err != nil {
-			return echo.NewHTTPError(http.StatusUnauthorized, err.Error())
+			return c.Redirect(http.StatusSeeOther, "/login")
 		}
 		// "token=eyJhbGciOiJI---.---" 877 chars
 		token := cookie.Value
