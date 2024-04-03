@@ -1,4 +1,4 @@
-{{ define "index" -}}
+{{ define "app" -}}
 <!DOCTYPE html>
 <html>
 
@@ -6,8 +6,11 @@
 <body class="flex flex-col h-full w-full bg-zinc-50 text-800 dark:bg-zinc-800 dark:text-zinc-100 p-4">
 
 {{ template "header.html" }}
-<main id="content" class="flex w-full">
-  <h1 class="text-2xl font-semibold mx-auto py-4">{{ . }}</h1>
+<main id="content" class="w-full text-center">
+    <h1 class="text-2xl font-semibold mx-auto py-4">{{ . }}</h1>
+    <p class="mx-auto pb-8">
+        This is where we make the magic happen.
+    </p>
 </main>
 
 {{ template "footer.html" }}
