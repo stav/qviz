@@ -1,24 +1,15 @@
+{{ define "index" -}}
 <!DOCTYPE html>
 <html>
 
-<head>
-    <title>Qviz Index</title>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="icon" type="image/png" href="htmx.png">
-    <script src="https://cdn.tailwindcss.com?plugins=forms,typography,aspect-ratio"></script>
-    <script src="https://unpkg.com/htmx.org@1.9.11/dist/htmx.js"></script>
-    <script src="htmx.js" type="module"></script>
-</head>
-
+{{ template "head.html" . }}
 <body class="flex flex-col h-full w-full bg-zinc-50 text-800 dark:bg-zinc-800 dark:text-zinc-100 p-4">
 
-    {{ template "header.html" }}
+{{ template "header.html" }}
+<h1 class="text-2xl font-semibold self-center py-4">{{ . }}</h1>
 
-    {{ template "auth" }}
-
-    {{ template "footer.html" }}
-
+{{ template "footer.html" }}
 </body>
 
 </html>
+{{ end }}

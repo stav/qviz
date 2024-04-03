@@ -25,11 +25,11 @@ type Result struct {
 }
 
 func IndexHandler(c echo.Context) error {
-	return c.Render(200, "index.html", nil)
+	return c.Render(200, "index", "Hello, Qviz!")
 }
 
 func GetLoginHandler(c echo.Context) error {
-	return c.Render(200, "login", nil)
+	return c.Render(200, "user", "login")
 }
 
 func PostLoginHandler(c echo.Context) error {
@@ -70,7 +70,7 @@ func PostLoginHandler(c echo.Context) error {
 }
 
 func GetRegisterHandler(c echo.Context) error {
-	return c.Render(200, "register", nil)
+	return c.Render(200, "user", "register")
 }
 
 func PostRegisterHandler(c echo.Context) error {
