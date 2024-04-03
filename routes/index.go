@@ -3,7 +3,9 @@ package routes
 import (
 	"context"
 	"fmt"
+	"net/http"
 	"os"
+	"time"
 
 	"github.com/labstack/echo/v4"
 
@@ -53,6 +55,15 @@ func PostLoginHandler(c echo.Context) error {
 		result.Email = auth.User.Email
 		result.Token = auth.AccessToken
 		result.Message = "User has been authenticated"
+		c.SetCookie(&http.Cookie{
+			Path: "/",
+			Name: "token",
+			Value: auth.AccessToken,
+			Expires: time.Now().Add(24 * time.Hour),
+			SameSite: http.SameSiteLaxMode,
+			HttpOnly: true,
+			Secure: true,
+		})
 	}
 
 	return c.Render(status, "result", result)
