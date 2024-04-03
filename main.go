@@ -1,11 +1,9 @@
 package main
 
 import (
-	"fmt"
 	"html/template"
 	"io"
 	"log"
-	"net/http"
 
 	"github.com/labstack/echo/v4"
 	"github.com/labstack/echo/v4/middleware"
@@ -51,10 +49,7 @@ func main() {
 
 	app := e.Group("/app")
 	app.Use(qviz_middleware.Sentry)
-	app.GET("", func(c echo.Context) error {
-		fmt.Println("GET /app")
-		return c.JSON(http.StatusOK, "{ \"message\": \"GET /app\" }")
-	})
+	app.GET("", routes.AppIndexHandler)
 
 	e.Logger.Fatal(e.Start(":8888"))
 
