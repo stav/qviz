@@ -44,6 +44,7 @@ func main() {
 	e.GET("/", routes.IndexHandler)
 	e.GET("/login", routes.GetLoginHandler)
 	e.POST("/login", routes.PostLoginHandler)
+	e.POST("/logout", routes.PostLogoutHandler)
 	e.GET("/register", routes.GetRegisterHandler)
 	e.POST("/register", routes.PostRegisterHandler)
 

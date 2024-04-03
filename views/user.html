@@ -6,7 +6,7 @@
 <body class="flex flex-col h-full w-full bg-zinc-50 text-800 dark:bg-zinc-800 dark:text-zinc-100 p-4">
 
 {{ template "header.html" }}
-<main id="content" class="flex w-full">
+<main id="content" class="text-center">
     <div id="{{ . }}" class="mx-auto mt-4">
         <form hx-post="/{{ . }}" hx-target="#result">
             <div class="grid grid-cols-1 gap-6 max-w-md mx-auto">

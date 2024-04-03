@@ -69,6 +69,26 @@ func PostLoginHandler(c echo.Context) error {
 	return c.Render(status, "result", result)
 }
 
+func PostLogoutHandler(c echo.Context) error {
+	ctx := context.Background()
+
+	cookie, err := c.Cookie("token")
+	if err != nil {
+		return c.Render(http.StatusAlreadyReported, "logout", "Tried to logout but no token found")
+	}
+	supabase.Auth.SignOut(ctx, cookie.Value)
+	c.SetCookie(&http.Cookie{
+		Path: "/",
+		Name: "token",
+		Value: "-",
+		MaxAge: -1,
+		SameSite: http.SameSiteLaxMode,
+		HttpOnly: true,
+		Secure: true,
+	})
+	return c.Render(http.StatusAccepted, "logout", "User has been logged out")
+}
+
 func GetRegisterHandler(c echo.Context) error {
 	return c.Render(200, "user", "register")
 }
