@@ -2,15 +2,18 @@
 <!DOCTYPE html>
 <html>
 
-{{ template "head.html" . }}
+{{ template "head.html" "Quiz App" }}
+
 <body class="flex flex-col h-full w-full bg-zinc-50 text-800 dark:bg-zinc-800 dark:text-zinc-100 p-4">
 
 {{ template "header.html" }}
 <main id="content" class="text-center">
-    <h1 class="text-2xl font-semibold mx-auto py-4">{{ . }}</h1>
-    <p class="mx-auto pb-8">
-        This is where we make the magic happen.
-    </p>
+    <h1 class="text-2xl font-semibold mx-auto py-4">Quiz App</h1>
+    <ul class="list-disc max-w-fit mx-auto text-left">
+        {{ range . }}
+        <li>{{ .ID }} | {{ .Date }} | {{ .Name }}</li>
+        {{ end }}
+    </ul>
 </main>
 
 {{ template "footer.html" }}
