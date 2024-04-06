@@ -31,13 +31,11 @@ func printHeaders(header http.Header) {
 func Sentry(next echo.HandlerFunc) echo.HandlerFunc {
 	return func(c echo.Context) error {
 		fmt.Println("\n____________________")
-		fmt.Println("Middleware: Headers")
-		fmt.Println()
+		fmt.Println("Middleware")
 
-		request := c.Request()
-		headers := request.Header
-
-		printHeaders(headers)
+		// request := c.Request()
+		// headers := request.Header
+		// printHeaders(headers)
 
 		cookie, err := c.Cookie("token")
 		if err != nil {
@@ -45,7 +43,7 @@ func Sentry(next echo.HandlerFunc) echo.HandlerFunc {
 		}
 		// "token=eyJhbGciOiJI---.---" 877 chars
 		token := cookie.Value
-		fmt.Println("\nToken: ", token)
+		fmt.Println("Token: ", len(token))
 
 		// Now perform a security check on the token
 
