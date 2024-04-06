@@ -9,11 +9,16 @@
 {{ template "header.html" }}
 <main id="content" class="text-center">
     <h1 class="text-2xl font-semibold mx-auto py-4">Quiz App</h1>
-    <ul class="list-disc max-w-fit mx-auto text-left">
-        {{ range . }}
-        <li>{{ .ID }} | {{ .Date }} | {{ .Name }}</li>
-        {{ end }}
-    </ul>
+    <div id="quiz-results">
+        <ul class="list-disc max-w-fit mx-auto text-left">
+            {{ range . }}
+            <li
+                hx-get="/app/quiz/{{ .ID }}"
+                hx-target="#quiz-results"
+            >{{ .ID }} | {{ .Date }} | {{ .Name }}</li>
+            {{ end }}
+        </ul>
+    </div>
 </main>
 
 {{ template "footer.html" }}

@@ -51,6 +51,7 @@ func main() {
 	app := e.Group("/app")
 	app.Use(qviz_middleware.Sentry)
 	app.GET("", routes.AppIndexHandler)
+	app.GET("/quiz/:id", routes.AppQuizHandler)
 
 	e.Logger.Fatal(e.Start(":8888"))
 

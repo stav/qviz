@@ -18,3 +18,13 @@ func AppIndexHandler(c echo.Context) error {
 	}
 	return c.Render(200, "app", results)
 }
+
+func AppQuizHandler(c echo.Context) error {
+	id := c.Param("id")
+	var results []Quiz
+	err := supabase.DB.From("quiz").Select("*").Filter("id", "eq", id).Execute(&results)
+	if err != nil {
+		return c.JSON(500, err)
+	}
+	return c.Render(200, "quiz.html", results[0])
+}
