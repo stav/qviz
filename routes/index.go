@@ -10,6 +10,8 @@ import (
 	"github.com/labstack/echo/v4"
 
 	supa "github.com/nedpals/supabase-go"
+
+	_ "github.com/joho/godotenv/autoload"
 )
 
 var SUPABASE_URL string = os.Getenv("SUPABASE_URL")
