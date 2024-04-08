@@ -1,0 +1,14 @@
+{{ block "quizs" . }}
+<div id="quiz-results" class="">
+    <ul class="max-w-fit mx-auto">
+        {{ range . }}
+        <li hx-get="/app/quiz/{{ .ID }}" hx-target="#quiz-results"
+            class="grid grid-cols-3 gap-2 p-2 my-2 hover:bg-pink-800 rounded-lg hover:cursor-pointer">
+            <div class="cell p-4">{{ .ID }}</div>
+            <div class="cell p-4">{{ .Name }}</div>
+            <div class="cell p-4">{{ .Date }}</div>
+        </li>
+        {{ end }}
+    </ul>
+</div>
+{{ end }}
