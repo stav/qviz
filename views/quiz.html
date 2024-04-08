@@ -1,20 +1,42 @@
 <div id="table" class="grid grid-flow-row-dense grid-cols-3 grid-rows-3 gap-4 w-96 mx-auto">
-    <div class="bg-slate-700"> Id   </div> <div class="col-span-2 bg-pink-600">{{ .ID }}</div>
-    <div class="bg-slate-700"> Name </div> <div class="col-span-2 bg-pink-600">{{ .Name }}</div>
-    <div class="bg-slate-700"> Date </div> <div class="col-span-2 bg-pink-600">{{ .Date }}</div>
+    <div class="bg-slate-700"> Id   </div> <div class="col-span-2 bg-pink-800">{{ .ID }}</div>
+    <div class="bg-slate-700"> Name </div> <div class="col-span-2 bg-pink-800">{{ .Name }}</div>
+    <div class="bg-slate-700"> Date </div> <div class="col-span-2 bg-pink-800">{{ .Date }}</div>
 </div>
 
-<div id="quiz-results" class="text-left pt-8">
-    <p>Questions: {{ .Msg }}</p>
-    <ul class="list-disc max-w-fit mx-auto text-left">
-        {{ range .Ques }}
-        <li>{{ .Text }}</li>
+<div id="quiz-results" class="max-w-fit mx-auto text-left pt-8">
+    <p class="text-xl p-4">Questions: {{ .Msg }}</p>
+    <ul class="max-w-fit mx-auto text-left">
+        {{ range $questions := .Ques }}
+        <li class="bg-green-800 py-1 px-4">
+            <p class="p-4">{{ .Text }}</p>
+
+            <ul class="answers list-inside p-4">
+                {{ range .Ans }}
+                <li class="pb-4">
+                    <label for="answer-{{ $questions.ID }}-{{ .ID }}">
+                        <input
+                            type="radio"
+                            id="answer-{{ $questions.ID }}-{{ .ID }}"
+                            name="answer-{{ $questions.ID }}"
+                            value="{{ .ID }}"
+                            class="mx-4"
+                            >
+                        {{ .Text }}
+                    </label>
+                </li>
+                {{ end }}
+            </ul>
+        </li>
         {{ end }}
     </ul>
 </div>
 
 <style>
-  #table div {
-    border-radius: 4px;
+    #table div, #quiz-results li {
+        border-radius: 4px;
+    }
+    #quiz-results .answers li {
+        list-style-type: upper-alpha;
     }
 </style>

@@ -16,24 +16,30 @@ type Quiz struct {
 }
 
 type Question struct {
-	// ID   int    `json:"id"`
+	ID   int    `json:"id"`
+	Text string `json:"text"`
+	Ans  []Answer `json:"answer"`
+}
+
+type Answer struct {
+	ID	 int    `json:"id"`
 	Text string `json:"text"`
 }
 
 func AppIndexHandler(c echo.Context) error {
-	var results []Quiz
-	err := supabase.DB.From("quiz").Select("*").Execute(&results)
+	var quizs []Quiz
+	err := supabase.DB.From("quiz").Select("*").Execute(&quizs)
 	if err != nil {
 		return c.JSON(500, err)
 	}
-	return c.Render(200, "app", results)
+	return c.Render(200, "app", quizs)
 }
 
 func AppQuizHandler(c echo.Context) error {
 	id := c.Param("id")
 	fmt.Println("ID:", id)
 
-	var results Quiz
+	var quizQs Quiz
 	var quiz Quiz
 	var err error
 
@@ -44,8 +50,8 @@ func AppQuizHandler(c echo.Context) error {
 	}
 	fmt.Println("Quiz:", quiz)
 
-	// Second query to get the questions
-	err = supabase.DB.From("quiz").Select("*,question!inner(text)").Single().Filter("id", "eq", id).Execute(&results)
+	// Second query to get the questions & answers
+	err = supabase.DB.From("quiz").Select("*,question!inner(id,text,answer!left(id,text))").Single().Filter("id", "eq", id).Execute(&quizQs)
 	if err != nil {
 		fmt.Println("Error:", err)
 		// Check if there are no questions
@@ -55,10 +61,11 @@ func AppQuizHandler(c echo.Context) error {
 		}
 		return c.JSON(500, err)
 	}
-	fmt.Println("Quizs:", results)
+	fmt.Println("quizQs:", quizQs)
 
-	quiz.Ques = make([]Question, len(results.Ques))
-	for i, q := range results.Ques {
+	// Copy the questions to the quiz one at a time because of the different types
+	quiz.Ques = make([]Question, len(quizQs.Ques))
+	for i, q := range quizQs.Ques {
 		fmt.Println("iQ:", i, q)
 		quiz.Ques[i] = q
 	}
@@ -66,5 +73,3 @@ func AppQuizHandler(c echo.Context) error {
 
 	return c.Render(200, "quiz.html", quiz)
 }
-
-// supabase.DB.From(table).Select("item,customer!inner(id, short_name, full_name)").Filter(`customer.id`, "eq", "0")
