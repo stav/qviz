@@ -24,6 +24,7 @@ type Question struct {
 type Answer struct {
 	ID	 int    `json:"id"`
 	Text string `json:"text"`
+	True bool   `json:"is_correct"`
 }
 
 func AppIndexHandler(c echo.Context) error {
@@ -51,7 +52,7 @@ func AppQuizHandler(c echo.Context) error {
 	fmt.Println("Quiz:", quiz)
 
 	// Second query to get the questions & answers
-	err = supabase.DB.From("quiz").Select("*,question!inner(id,text,answer!left(id,text))").Single().Filter("id", "eq", id).Execute(&quizQs)
+	err = supabase.DB.From("quiz").Select("*,question!inner(id,text,answer!left(id,text,is_correct))").Single().Filter("id", "eq", id).Execute(&quizQs)
 	if err != nil {
 		fmt.Println("Error:", err)
 		// Check if there are no questions

@@ -5,22 +5,25 @@
 </div>
 
 <div id="quiz-results" class="max-w-fit mx-auto text-left pt-8">
+
     <p class="text-xl p-4">Questions: {{ .Msg }}</p>
+
     <ul class="max-w-fit mx-auto text-left">
         {{ range $questions := .Ques }}
-        <li class="bg-green-800 py-1 px-4">
+        <li class="bg-blue-800 my-8 py-1 px-4">
             <p class="p-4">{{ .Text }}</p>
 
             <ul class="answers list-inside p-4">
                 {{ range .Ans }}
-                <li class="pb-4">
+                <li class="p-2">
                     <label for="answer-{{ $questions.ID }}-{{ .ID }}">
                         <input
                             type="radio"
                             id="answer-{{ $questions.ID }}-{{ .ID }}"
                             name="answer-{{ $questions.ID }}"
-                            value="{{ .ID }}"
+                            value="{{ .True }}"
                             class="mx-4"
+                            hx-on:click="radio(this)"
                             >
                         {{ .Text }}
                     </label>
@@ -30,12 +33,30 @@
         </li>
         {{ end }}
     </ul>
+
+    <script>
+        /**
+         * Highlight the correct answers when a radio button is clicked
+         * @param {HTMLInputElement} input
+         */
+        function radio(input) {
+            // loop through all radio buttons and highlight the correct answers
+            for (const radioButton of document.getElementsByName(input.name)) {
+                if (radioButton.value === 'true') {
+                    radioButton.parentNode.parentNode.style.backgroundColor = 'green';
+                }
+            }
+        }
+    </script>
+
 </div>
 
 <style>
-    #table div, #quiz-results li {
+    #table div,
+    #quiz-results li {
         border-radius: 4px;
     }
+
     #quiz-results .answers li {
         list-style-type: upper-alpha;
     }
