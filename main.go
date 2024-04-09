@@ -53,6 +53,6 @@ func main() {
 	app.GET("", routes.AppIndexHandler)
 	app.GET("/quiz/:id", routes.AppQuizHandler)
 
-	e.Logger.Fatal(e.Start(":8888"))
+	e.Logger.Fatal(e.Start(":4000"))
 
 }
