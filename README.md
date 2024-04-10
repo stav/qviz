@@ -14,6 +14,8 @@ Air previously installed with:
 
     go install github.com/cosmtrek/air@latest
 
+    air init
+
 Start the server with:
 
-    air init
+    air
