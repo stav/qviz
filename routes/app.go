@@ -58,7 +58,7 @@ func AppQuizHandler(c echo.Context) error {
 		// Check if there are no questions
 		if strings.HasPrefix(err.Error(), "PGRST116") {
 			quiz.Msg = err.Error()
-			return c.Render(200, "quiz.html", quiz)
+			return c.Render(200, "__quiz.html", quiz)
 		}
 		return c.JSON(500, err)
 	}
@@ -72,5 +72,5 @@ func AppQuizHandler(c echo.Context) error {
 	}
 	fmt.Println("Quiz2:", quiz)
 
-	return c.Render(200, "quiz.html", quiz)
+	return c.Render(200, "__quiz.html", quiz)
 }
