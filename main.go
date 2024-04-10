@@ -39,7 +39,7 @@ func main() {
 	}))
 
 	e.File("/htmx.png", "images/htmx.png")
-	e.File("/htmx.js", "js/htmx.js")
+	e.File("/htmx.js", "js/htmx.js", qviz_middleware.AddScriptHeader)
 
 	e.GET("/", routes.IndexHandler)
 	e.GET("/login", routes.GetLoginHandler)
@@ -52,6 +52,10 @@ func main() {
 	app.Use(qviz_middleware.Sentry)
 	app.GET("", routes.AppIndexHandler)
 	app.GET("/quiz/:id", routes.AppQuizHandler)
+
+	api := e.Group("/api")
+	api.Use(qviz_middleware.Sentry)
+	api.GET("/quiz/:id", routes.ApiQuizHandler)
 
 	e.Logger.Fatal(e.Start(":4000"))
 
