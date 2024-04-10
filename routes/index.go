@@ -39,5 +39,5 @@ type Answer struct {
 }
 
 func IndexHandler(c echo.Context) error {
-	return c.Render(200, "index", "Hello, Qviz!")
+	return c.Render(200, "index.html", "Hello, Qviz!")
 }

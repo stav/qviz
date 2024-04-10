@@ -10,9 +10,9 @@ func AppIndexHandler(c echo.Context) error {
 	if err != nil {
 		return c.JSON(500, err)
 	}
-	return c.Render(200, "app", quizs)
+	return c.Render(200, "app.html", quizs)
 }
 
 func AppQuizHandler(c echo.Context) error {
-	return c.Render(200, "quiz", QuizFromId(c))
+	return c.Render(200, "quiz.html", QuizFromId(c))
 }
