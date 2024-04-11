@@ -8,14 +8,7 @@ import (
 	"github.com/labstack/echo/v4"
 )
 
-// ServerHeader middleware adds a custom header to the response.
-func serverHeader(next echo.HandlerFunc) echo.HandlerFunc {
-	return func(c echo.Context) error {
-		c.Response().Header().Set("Custom-Header", "blah!!!")
-		return next(c)
-	}
-}
-
+// printHeaders is a helper function to print the headers of an HTTP request.
 func printHeaders(header http.Header) {
 	keys := make([]string, 0, len(header))
 	for k := range header {
@@ -28,6 +21,19 @@ func printHeaders(header http.Header) {
 	}
 }
 
+// AddScriptHeader adds a custom header to the response.
+func AddScriptHeader(next echo.HandlerFunc) echo.HandlerFunc {
+	fmt.Println("AddScriptHeader middleware")
+	return func(c echo.Context) error {
+		fmt.Println("Setting Content-Type to application/javascript")
+		c.Response().Header().Set("Content-Type", "application/javascript")
+		return next(c)
+	}
+}
+
+// Sentry performs a security check on the token in the request cookie.
+// If the token is valid, it calls the next handler in the chain.
+// If the token is invalid or missing, it redirects the user to the login page.
 func Sentry(next echo.HandlerFunc) echo.HandlerFunc {
 	return func(c echo.Context) error {
 		fmt.Println("\n____________________")

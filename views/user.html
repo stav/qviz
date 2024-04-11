@@ -2,10 +2,10 @@
 <!DOCTYPE html>
 <html>
 
-{{ template "head.html" . }}
+{{ template "__head.html" . }}
 <body class="flex flex-col h-full w-full bg-zinc-50 text-800 dark:bg-zinc-800 dark:text-zinc-100 p-4">
 
-{{ template "header.html" }}
+{{ template "__header.html" }}
 <main id="content" class="text-center">
     <div id="{{ . }}" class="mx-auto mt-4">
         <form hx-post="/{{ . }}" hx-target="#result">
@@ -29,7 +29,7 @@
     <div id="result"></div>
 </main>
 
-{{ template "footer.html" }}
+{{ template "__footer.html" }}
 </body>
 
 </html>
