@@ -22,7 +22,7 @@ type Result struct {
 }
 
 func GetLoginHandler(c echo.Context) error {
-	return c.Render(200, "user", "login")
+	return c.Render(200, "user.html", "login")
 }
 
 func PostLoginHandler(c echo.Context) error {
@@ -83,7 +83,7 @@ func PostLogoutHandler(c echo.Context) error {
 }
 
 func GetRegisterHandler(c echo.Context) error {
-	return c.Render(200, "user", "register")
+	return c.Render(200, "user.html", "register")
 }
 
 func PostRegisterHandler(c echo.Context) error {

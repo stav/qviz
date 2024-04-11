@@ -1,30 +1,28 @@
-<div id="table" class="grid grid-flow-row-dense grid-cols-3 grid-rows-3 gap-4 w-96 mx-auto">
-    <div class="bg-slate-700"> Id   </div> <div class="col-span-2 bg-pink-800">{{ .ID }}</div>
-    <div class="bg-slate-700"> Name </div> <div class="col-span-2 bg-pink-800">{{ .Name }}</div>
-    <div class="bg-slate-700"> Date </div> <div class="col-span-2 bg-pink-800">{{ .Date }}</div>
-</div>
+{{ $numQuestions := len .Ques }}
+
+<h2 class="text-xl bg-pink-950 p-2">{{ .Name }}</h2>
 
 <div id="quiz-results" class="max-w-fit mx-auto text-left pt-8">
 
-    <p class="text-xl p-4">Questions: {{ .Msg }}</p>
+    <p class="text-xl p-4">({{ $numQuestions }}) Questions: {{ .Msg }}</p>
 
     <ul class="max-w-fit mx-auto text-left">
-        {{ range $questions := .Ques }}
+        {{ range $i, $question := .Ques }}
         <li class="bg-blue-900 my-8 py-1 px-4">
-            <p class="p-4">{{ .Text }}</p>
+
+            <p class="p-4">{{ inc $i }}/{{ $numQuestions }} - {{ $question.Text }}</p>
 
             <ul class="answers list-inside p-4">
-                {{ range .Ans }}
-                <label for="answer-{{ $questions.ID }}-{{ .ID }}">
+                {{ range $answer := .Ans }}
+                <label>
                     <li hx-on:click="radio(this)" class="border border-blue-800 hover:border-blue-300 p-2 m-2">
                         <input
                             type="radio"
-                            id="answer-{{ $questions.ID }}-{{ .ID }}"
-                            name="answer-{{ $questions.ID }}"
-                            value="{{ .True }}"
+                            name="answer-{{ $question.ID }}"
+                            value="{{ $answer.True }}"
                             class="mx-4"
                             >
-                        {{ .Text }}
+                        {{ $answer.Text }}
                     </li>
                 </label>
                 {{ end }}
