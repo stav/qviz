@@ -13,7 +13,7 @@ import (
 	_ "github.com/joho/godotenv/autoload"
 )
 
-type Result struct {
+type User struct {
 	Error error
 	Id    string
 	Email string
@@ -39,15 +39,15 @@ func PostLoginHandler(c echo.Context) error {
 		status = 422
 	}
 
-	result := Result{
+	user := User{
 		Error: err,
 	}
 
 	if auth != nil {
-		result.Id = auth.User.ID
-		result.Email = auth.User.Email
-		result.Token = auth.AccessToken
-		result.Message = "User has been authenticated"
+		user.Id = auth.User.ID
+		user.Email = auth.User.Email
+		user.Token = auth.AccessToken
+		user.Message = "User has been authenticated"
 		c.SetCookie(&http.Cookie{
 			Path: "/",
 			Name: "token",
@@ -59,7 +59,7 @@ func PostLoginHandler(c echo.Context) error {
 		})
 	}
 
-	return c.Render(status, "result", result)
+	return c.Render(status, "__result.html", user)
 }
 
 func PostLogoutHandler(c echo.Context) error {
@@ -67,7 +67,7 @@ func PostLogoutHandler(c echo.Context) error {
 
 	cookie, err := c.Cookie("token")
 	if err != nil {
-		return c.Render(http.StatusAlreadyReported, "logout", "Tried to logout but no token found")
+		return c.Render(http.StatusAlreadyReported, "__logout.html", "Tried to logout but no token found")
 	}
 	supabase.Auth.SignOut(ctx, cookie.Value)
 	c.SetCookie(&http.Cookie{
@@ -79,7 +79,7 @@ func PostLogoutHandler(c echo.Context) error {
 		HttpOnly: true,
 		Secure: true,
 	})
-	return c.Render(http.StatusAccepted, "logout", "User has been logged out")
+	return c.Render(http.StatusAccepted, "__logout.html", "User has been logged out")
 }
 
 func GetRegisterHandler(c echo.Context) error {
@@ -93,22 +93,22 @@ func PostRegisterHandler(c echo.Context) error {
 		Email:    c.FormValue("email"),
 		Password: c.FormValue("password"),
 	}
-	user, err := supabase.Auth.SignUp(ctx, creds)
+	auth, err := supabase.Auth.SignUp(ctx, creds)
 
 	status := 200
 	if err != nil {
 		status = 422
 	}
 
-	result := Result{
+	user := User{
 		Error: err,
 	}
 
-	if user != nil {
-		result.Id = user.ID
-		result.Email = user.Email
-		result.Message = fmt.Sprintf("User %s has been created", user.Email)
+	if auth != nil {
+		user.Id = auth.ID
+		user.Email = auth.Email
+		user.Message = fmt.Sprintf("User %s has been created", auth.Email)
 	}
 
-	return c.Render(status, "result", result)
+	return c.Render(status, "__result.html", user)
 }

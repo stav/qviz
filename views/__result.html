@@ -1,4 +1,3 @@
-{{ block "result" . }}
 <div>
     <div class="mt-4 text-red-700 dark:text-red-200">
         {{ .Error }}
@@ -12,6 +11,7 @@
     <dl class="flex"><dt class="flex-none w-20"> Token </dt><dd>{{ .Token }}</dd></dl>
     {{ end }}
 </div>
+
 <script type="module">
     const token = '{{ .Token }}'
     console.log("token length:", token.length)
@@ -19,4 +19,3 @@
         localStorage.setItem("supabase.auth.token", token)
     }
 </script>
-{{ end }}
