@@ -47,6 +47,7 @@ func main() {
 
 	e.File("/htmx.png", "images/htmx.png")
 	e.File("/htmx.js", "js/htmx.js", qviz_middleware.AddScriptHeader)
+	e.File("/head.js", "js/head.js", qviz_middleware.AddScriptHeader)
 
 	e.GET("/", routes.IndexHandler)
 	e.GET("/login", routes.GetLoginHandler)

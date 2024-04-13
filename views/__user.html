@@ -13,9 +13,7 @@
 </div>
 
 <script type="module">
-    const token = '{{ .Token }}'
-    console.log("token length:", token.length)
-    if (token.length > 0) {
-        localStorage.setItem("supabase.auth.token", token)
-    }
+    const user = '{{ .Email }}';
+    const token = '{{ .Token }}';
+    login(user, token);
 </script>

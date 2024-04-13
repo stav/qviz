@@ -59,7 +59,7 @@ func PostLoginHandler(c echo.Context) error {
 		})
 	}
 
-	return c.Render(status, "__result.html", user)
+	return c.Render(status, "__user.html", user)
 }
 
 func PostLogoutHandler(c echo.Context) error {
@@ -110,5 +110,5 @@ func PostRegisterHandler(c echo.Context) error {
 		user.Message = fmt.Sprintf("User %s has been created", auth.Email)
 	}
 
-	return c.Render(status, "__result.html", user)
+	return c.Render(status, "__user.html", user)
 }
