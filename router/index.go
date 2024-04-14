@@ -1,7 +1,9 @@
-package routes
+package router
 
 import (
 	"os"
+
+	"github.com/labstack/echo/v4"
 
 	supa "github.com/nedpals/supabase-go"
 
@@ -34,4 +36,8 @@ type Answer struct {
 	ID   int    `json:"id"`
 	Text string `json:"text"`
 	True bool   `json:"is_correct"`
+}
+
+func IndexHandler(c echo.Context) error {
+	return c.Render(200, "index.html", "Hello, Qviz!")
 }
