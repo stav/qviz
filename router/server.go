@@ -2,14 +2,9 @@ package router
 
 import (
 	"github.com/labstack/echo/v4"
-	"github.com/labstack/echo/v4/middleware"
 
-	qviz_middleware "bld/qviz/middleware"
+	"bld/qviz/middleware"
 )
-
-func IndexHandler(c echo.Context) error {
-	return c.Render(200, "index.html", "Hello, Qviz!")
-}
 
 // Exported function that returns an echo instance
 func NewServer() *echo.Echo {
@@ -17,15 +12,14 @@ func NewServer() *echo.Echo {
 	e := echo.New()
 	e.Logger.Print("Logging to the echo logger")
 	e.Renderer = newTemplate()
-	// e.Use(middleware.Recover())
 	e.Use(middleware.LoggerWithConfig(middleware.LoggerConfig{
 		Format: "${status} ${method} ${uri} ${error}\n",
 	}))
 
 	// Static files
 	e.File("/htmx.png", "images/htmx.png")
-	e.File("/htmx.js", "js/htmx.js", qviz_middleware.AddScriptHeader)
-	e.File("/head.js", "js/head.js", qviz_middleware.AddScriptHeader)
+	e.File("/htmx.js", "js/htmx.js", middleware.AddScriptHeader)
+	e.File("/head.js", "js/head.js", middleware.AddScriptHeader)
 
 	// Public routes
 	e.GET("/", IndexHandler)
@@ -37,13 +31,13 @@ func NewServer() *echo.Echo {
 
 	// Guarded app routes
 	app := e.Group("/app")
-	app.Use(qviz_middleware.Sentry)
+	app.Use(middleware.Sentry)
 	app.GET("", AppIndexHandler)
 	app.GET("/quiz/:id", AppQuizHandler)
 
 	// Guarded API routes
 	api := e.Group("/api")
-	api.Use(qviz_middleware.Sentry)
+	api.Use(middleware.Sentry)
 	api.GET("/quiz/:id", ApiQuizHandler)
 
 	// Return the echo instance
