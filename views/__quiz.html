@@ -15,13 +15,8 @@
             <ul class="answers list-inside p-4">
                 {{ range $answer := .Ans }}
                 <label>
-                    <li hx-on:click="radio(this)" class="border border-blue-800 hover:border-blue-300 p-2 m-2">
-                        <input
-                            type="radio"
-                            name="answer-{{ $question.ID }}"
-                            value="{{ $answer.True }}"
-                            class="mx-4"
-                            >
+                    <li class="border border-blue-800 hover:border-blue-300 p-2 m-2">
+                        <input type="radio" class="mx-4" name="answer-{{ $question.ID }}">
                         {{ $answer.Text }}
                     </li>
                 </label>
@@ -30,20 +25,6 @@
         </li>
         {{ end }}
     </ul>
-
-    <script>
-        /**
-         * Highlight the correct answers
-         * @param {HTMLInputElement} item
-         */
-        function radio(item) {
-            const selectedRadioButton = item.querySelector('input[type="radio"]')
-            // loop through all radio buttons and highlight the correct answers
-            for (const radioButton of document.getElementsByName(selectedRadioButton.name))
-                if (radioButton.value === 'true')
-                    radioButton.parentNode.classList.add('correct')
-        }
-    </script>
 
 </div>
 
