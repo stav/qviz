@@ -10,8 +10,8 @@ func main() {
 
 	log.Println("Mainline logging")
 
-	e := routes.NewServer()
+	server := routes.NewServer()
 
-	e.Logger.Fatal(e.Start(":4000"))
+	server.Logger.Fatal(server.Start(":4000"))
 
 }
