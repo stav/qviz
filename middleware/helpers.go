@@ -24,7 +24,6 @@ func printHeaders(headers http.Header) {
 // AddScriptHeader adds a custom header to the response.
 func AddScriptHeader(next echo.HandlerFunc) echo.HandlerFunc {
 	return func(c echo.Context) error {
-		fmt.Println("Setting Content-Type to application/javascript")
 		c.Response().Header().Set("Content-Type", "application/javascript")
 		return next(c)
 	}
