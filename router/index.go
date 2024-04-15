@@ -28,6 +28,7 @@ func (q *Quiz) Error() string {
 
 type Question struct {
 	ID   int      `json:"id"`
+	Num  int      `json:"number"`
 	Text string   `json:"text"`
 	Ans  []Answer `json:"answer"`
 }
