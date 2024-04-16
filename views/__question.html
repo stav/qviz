@@ -1,0 +1,21 @@
+{{ $quiz := . }}
+{{ $question := $quiz.Ques }}
+<div class="rounded-xl bg-blue-900 text-left m-4">
+    <p class="p-4">
+        <sup>{{ $question.Num }}</sup>
+        /
+        <sub>{{ $quiz.Qcnt }}</sub>
+        <span class="text-lg font-bold px-2">{{ $question.Text }}</span>
+    </p>
+    <ul class="answers list-inside p-4">
+        {{ range $answer := $question.Ans }}
+        {{ $path := printf "/api/quiz/%d/%d/%d" $quiz.ID $question.ID $answer.ID }}
+        <label hx-get="{{ $path }}" hx-target="#question-result">
+            <li class="list-[upper-alpha] rounded-xl border border-blue-800 hover:border-blue-300 p-2 m-2">
+                <input type="radio" class="mx-4" name="answer-{{ $question.ID }}">
+                {{ $answer.Text }}
+            </li>
+        </label>
+        {{ end }}
+    </ul>
+</div>

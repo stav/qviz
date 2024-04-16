@@ -42,6 +42,10 @@ func QuizFromId(quiz_id, question_num string) Quiz {
 	}
 	fmt.Println("questions:", questions)
 	quiz.Qcnt = len(questions)
+	if quiz.Qcnt == 0 {
+		quiz.Msg = "No questions found"
+		return quiz
+	}
 
 	// Now filter the questions to get the one with the question number.
 	// I can filter the questions with the client but I don't know how to also
@@ -70,4 +74,12 @@ func ApiQuestionHandler(c echo.Context) error {
 	question_num := c.Param("questionNumber")
 	fmt.Println("ApiQuestionHandler:", quiz_id, question_num)
 	return c.Render(200, "__quiz.html", QuizFromId(quiz_id, question_num))
+}
+
+func ApiAnswerHandler(c echo.Context) error {
+	quiz_id := c.Param("quizId")
+	question_num := c.Param("questionNumber")
+	answer_id := c.Param("answerId")
+	fmt.Println("ApiAnswerHandler:", quiz_id, question_num, answer_id)
+	return c.Render(200, "__answer.html", answer_id)
 }

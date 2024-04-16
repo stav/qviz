@@ -39,7 +39,8 @@ func NewServer() *echo.Echo {
 	api := e.Group("/api")
 	api.Use(middleware.Sentry)
 	api.GET("/quiz/:quizId", ApiQuizHandler)
-	api.GET("/quiz/:quizId/:QuestionNumber", ApiQuestionHandler)
+	api.GET("/quiz/:quizId/:questionNumber", ApiQuestionHandler)
+	api.GET("/quiz/:quizId/:questionNumber/:answerId", ApiAnswerHandler)
 
 	// Return the echo instance
 	return e
