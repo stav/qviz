@@ -7,11 +7,13 @@
     "labstack",
     "nedpals",
     "PGRST",
+    "Qcnt",
     "quizs",
     "Qviz",
     "supa",
     "supabase",
     "tailwindcss",
+    "thoas",
     "tmpl"
   ]
 }

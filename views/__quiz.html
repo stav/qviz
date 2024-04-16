@@ -1,32 +1,27 @@
-{{ $numQuestions := len .Ques }}
+{{ $quiz := . }}
+{{ $question := $quiz.Ques }}
 
-<h2 class="text-xl bg-pink-950 p-2">{{ .Name }}</h2>
+<h2 class="text-xl bg-pink-950 p-2">{{ $quiz.Name }}</h2>
 
-<div id="quiz-results" class="max-w-fit mx-auto text-left pt-8">
+<div id="quiz-results" class="max-w-fit mx-auto text-left pt-4">
+    <div class="rounded-xl bg-blue-900">
 
-    <ul class="max-w-fit mx-auto text-left">
-        {{ range $i, $question := .Ques }}
-        <li class="rounded-xl bg-blue-900 my-8 py-1 px-4">
+        <p class="p-4">
+            <sup>{{ $question.Num }}</sup>
+            /
+            <sub>{{ $quiz.Qcnt }}</sub>
+            <span class="text-lg font-bold px-2">{{ $question.Text }}</span>
+        </p>
 
-            <p class="p-4">
-                <sup>{{ $question.Num }}</sup>
-                /
-                <sub>{{ $numQuestions }}</sub>
-                <span class="text-lg font-bold px-2">{{ $question.Text }}</span>
-            </p>
-
-            <ul class="answers list-inside p-4">
-                {{ range $answer := .Ans }}
-                <label>
-                    <li class="list-[upper-alpha] rounded-xl border border-blue-800 hover:border-blue-300 p-2 m-2">
-                        <input type="radio" class="mx-4" name="answer-{{ $question.ID }}">
-                        {{ $answer.Text }}
-                    </li>
-                </label>
-                {{ end }}
-            </ul>
-        </li>
-        {{ end }}
-    </ul>
-
+        <ul class="answers list-inside p-4">
+            {{ range $answer := $question.Ans }}
+            <label>
+                <li class="list-[upper-alpha] rounded-xl border border-blue-800 hover:border-blue-300 p-2 m-2">
+                    <input type="radio" class="mx-4" name="answer-{{ $question.ID }}">
+                    {{ $answer.Text }}
+                </li>
+            </label>
+            {{ end }}
+        </ul>
+    </div>
 </div>

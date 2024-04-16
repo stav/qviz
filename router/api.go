@@ -2,7 +2,10 @@ package router
 
 import (
 	"fmt"
+	"strconv"
 	"strings"
+
+	"github.com/thoas/go-funk"
 
 	"github.com/labstack/echo/v4"
 )
@@ -26,7 +29,7 @@ func QuizFromId(quiz_id, question_num string) Quiz {
 
 	// Second query to get the questions & answers
 	query := "id,number,text,answer!left(id,text,is_correct)"
-	err = supabase.DB.From("question").Select(query).Filter("quiz_id", "eq", quiz_id).Filter("number", "eq", question_num).Execute(&questions)
+	err = supabase.DB.From("question").Select(query).Filter("quiz_id", "eq", quiz_id).Execute(&questions)
 	if err != nil {
 		fmt.Println("Error:", err)
 		// Check if there are no questions
@@ -38,15 +41,21 @@ func QuizFromId(quiz_id, question_num string) Quiz {
 		return quiz
 	}
 	fmt.Println("questions:", questions)
+	quiz.Qcnt = len(questions)
 
-	// Copy the questions to the quiz one at a time because of the different types
-	quiz.Ques = make([]Question, len(questions))
-	for i, q := range questions {
-		fmt.Println("iQ:", i, q)
-		quiz.Ques[i] = q
-	}
+	// Now filter the questions to get the one with the question number.
+	// I can filter the questions with the client but I don't know how to also
+	// `SELECT COUNT(*)` in the same query. I could make a separate db call to
+	// get the count but I decided to just return the data and filter it here.
+	filtered_questions := funk.Filter(questions, func(q Question) bool {
+		num, _ := strconv.Atoi(question_num)
+		return q.Num == num
+	}).([]Question)
+	fmt.Println("filtered_questions:", filtered_questions)
+	quiz.Ques = filtered_questions[0]
 	fmt.Println("Quiz2:", quiz)
 
+	// Return the quiz
 	return quiz
 }
 
