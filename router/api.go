@@ -8,7 +8,7 @@ import (
 	"github.com/labstack/echo/v4"
 )
 
-func QuizFromId(quiz_id, question_num string) Quiz {
+func QuizFromId(quiz_id, quest_num string) Quiz {
 
 	var err error
 	var quiz Quiz
@@ -44,9 +44,13 @@ func QuizFromId(quiz_id, question_num string) Quiz {
 		quiz.Questions[i] = q
 	}
 	quiz.Qcount = len(quiz.Questions)
+	if quiz.Qcount == 0 {
+		quiz.Msg = "No questions found"
+		return quiz
+	}
 
 	// Set the question to the one requested
-	index, err := strconv.Atoi(question_num) // Convert question_num from string to int
+	index, err := strconv.Atoi(quest_num) // Convert quest_num from string to int
 	if err != nil {
 		quiz.Msg = err.Error()
 		fmt.Println("Error:", err)
@@ -71,6 +75,14 @@ func ApiQuizHandler(c echo.Context) error {
 
 func ApiQuestionHandler(c echo.Context) error {
 	quiz_id := c.Param("quizId")
-	question_num := c.Param("questionNumber")
-	return c.Render(200, "__quiz.html", QuizFromId(quiz_id, question_num))
+	quest_num := c.Param("questionNumber")
+	return c.Render(200, "__quiz.html", QuizFromId(quiz_id, quest_num))
+}
+
+func ApiAnswerHandler(c echo.Context) error {
+	quiz_id := c.Param("quizId")
+	quest_num := c.Param("questionNumber")
+	answer_id := c.Param("answerId")
+	fmt.Println("ApiAnswerHandler:", quiz_id, quest_num, answer_id)
+	return c.Render(200, "__answer.html", answer_id)
 }
