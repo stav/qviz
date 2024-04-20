@@ -33,12 +33,13 @@ func NewServer() *echo.Echo {
 	app := e.Group("/app")
 	app.Use(middleware.Sentry)
 	app.GET("", AppIndexHandler)
-	app.GET("/quiz/:id", AppQuizHandler)
+	app.GET("/quiz/:quizId", AppQuizHandler)
 
 	// Guarded API routes
 	api := e.Group("/api")
 	api.Use(middleware.Sentry)
-	api.GET("/quiz/:id", ApiQuizHandler)
+	api.GET("/quiz/:quizId", ApiQuizHandler)
+	api.GET("/quiz/:quizId/:QuestionNumber", ApiQuestionHandler)
 
 	// Return the echo instance
 	return e

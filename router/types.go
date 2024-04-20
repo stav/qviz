@@ -3,11 +3,12 @@ package router
 // Contains the common types used in the router package
 
 type Quiz struct {
-	ID   int        `json:"id"`
-	Name string     `json:"name"`
-	Date string     `json:"created_at"`
-	Ques []Question `json:"question"`
-	Msg  string
+	ID        int        `json:"id"`
+	Name      string     `json:"name"`
+	Date      string     `json:"created_at"`
+	Questions []Question `json:"questions"`
+	Qcount    int
+	Msg       string
 }
 
 func (q *Quiz) Error() string {
@@ -16,6 +17,7 @@ func (q *Quiz) Error() string {
 
 type Question struct {
 	ID   int      `json:"id"`
+	Num  int      `json:"number"`
 	Text string   `json:"text"`
 	Ans  []Answer `json:"answer"`
 }

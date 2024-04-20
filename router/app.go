@@ -14,5 +14,6 @@ func AppIndexHandler(c echo.Context) error {
 }
 
 func AppQuizHandler(c echo.Context) error {
-	return c.Render(200, "quiz.html", QuizFromId(c))
+	quiz_id := c.Param("quizId")
+	return c.Render(200, "quiz.html", QuizFromId(quiz_id, "1"))
 }

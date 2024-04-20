@@ -1,21 +1,24 @@
-{{ $numQuestions := len .Ques }}
+{{ $numQuestions := .Qcount }}
 
 <h2 class="text-xl bg-pink-950 p-2">{{ .Name }}</h2>
 
 <div id="quiz-results" class="max-w-fit mx-auto text-left pt-8">
 
-    <p class="text-xl p-4">({{ $numQuestions }}) Questions: {{ .Msg }}</p>
-
     <ul class="max-w-fit mx-auto text-left">
-        {{ range $i, $question := .Ques }}
-        <li class="bg-blue-900 my-8 py-1 px-4">
+        {{ range $i, $question := .Questions }}
+        <li class="rounded-xl bg-blue-900 my-8 py-1 px-4">
 
-            <p class="p-4">{{ inc $i }}/{{ $numQuestions }} - {{ $question.Text }}</p>
+            <p class="p-4">
+                <sup>{{ $question.Num }}</sup>
+                /
+                <sub>{{ $numQuestions }}</sub>
+                <span class="text-lg font-bold px-2">{{ $question.Text }}</span>
+            </p>
 
             <ul class="answers list-inside p-4">
                 {{ range $answer := .Ans }}
                 <label>
-                    <li class="border border-blue-800 hover:border-blue-300 p-2 m-2">
+                    <li class="list-[upper-alpha] rounded-xl border border-blue-800 hover:border-blue-300 p-2 m-2">
                         <input type="radio" class="mx-4" name="answer-{{ $question.ID }}">
                         {{ $answer.Text }}
                     </li>
@@ -27,18 +30,3 @@
     </ul>
 
 </div>
-
-<style>
-    #table div,
-    #quiz-results li {
-        border-radius: 4px;
-    }
-
-    #quiz-results .answers li {
-        list-style-type: upper-alpha;
-    }
-
-    #quiz-results .correct {
-        background-color: #225023;
-    }
-</style>
